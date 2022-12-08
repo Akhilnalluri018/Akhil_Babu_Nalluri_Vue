@@ -1,26 +1,48 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  
+  <MyHeader />
+  <CountryBox :countries="countries" />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import MyHeader from './components/MyHeader.vue'
+import CountryBox from './components/CountryBox.vue'
+
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    MyHeader,
+    CountryBox
+  },
+  data(){
+    return {
+      countries: []
+    }
+  },
+  methods: {
+    // promises
+
+      async fetchCountries(){
+         const res= await fetch('http://localhost:4107/api')
+         const data= await res.json()
+          console.log(data)
+         return data
+      }
+
+  },
+
+  async created(){
+    this.countries = await this.fetchCountries()
   }
 }
+
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: black;
 }
 </style>
